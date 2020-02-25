@@ -1,0 +1,6 @@
+/target
+.idea
+*.iml
+/coverage
+/build
+.DS_Store
