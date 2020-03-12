@@ -1,6 +1,7 @@
 package com.example.docker.demo.api;
 
 import com.example.docker.demo.model.Customer;
+import com.example.docker.demo.rabbitmq.Sender;
 import com.example.docker.demo.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -13,6 +14,8 @@ public class DemoController {
 
     @Autowired
     private CustomerRepository customerRepository;
+    @Autowired
+    private Sender sender;
 
     @GetMapping(value = "sayHello")
     public String helloWorld(){
@@ -23,6 +26,8 @@ public class DemoController {
     @PostMapping(value = "customer/create")
     public Customer addCustomer(@RequestBody Customer customer){
         System.out.println("Customer Received :" + customer.getFirstName());
+        sender.send(customer.toString());
+        System.out.println("Customer Sent :" + customer.getFirstName());
         return customerRepository.save(customer);
     }
 
