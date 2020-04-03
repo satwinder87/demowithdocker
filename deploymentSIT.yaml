@@ -2,22 +2,22 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   creationTimestamp: null
-  name: demowithdocker-deployment
+  name: demowithdocker-deployment-sit
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: demowithdocker
+      app: demowithdocker-sit
   strategy: {}
   template:
     metadata:
       creationTimestamp: null
       labels:
-        app: demowithdocker
+        app: demowithdocker-sit
     spec:
       containers:
         - image: satwinder1983/demowithdocker
-          name: demowithdocker-container
+          name: demowithdocker-container-sit
           resources: {}
           ports:
             - containerPort: 8080
@@ -39,10 +39,10 @@ apiVersion: v1
 kind: Service
 metadata:
   creationTimestamp: null
-  name: demowithdocker-service
+  name: demowithdocker-service-sit
 spec:
   selector:
-    app: demowithdocker
+    app: demowithdocker-sit
   ports:
     - port: 80
       targetPort: 8080

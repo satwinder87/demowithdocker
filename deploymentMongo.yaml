@@ -42,5 +42,21 @@ spec:
       name: http
   type: ClusterIP
 
-
+---
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    app: mongodb
+  name: mongodbservice-nodeport
+spec:
+  selector:
+    app: mongodb
+  ports:
+    - port: 27017
+      targetPort: 27017
+      protocol: TCP
+      name: http
+  type: NodePort
 

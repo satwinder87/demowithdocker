@@ -60,5 +60,22 @@ spec:
       name: http
   type: NodePort
 
+---
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    app: rabbitmq
+  name: rabbitmqservice-nodeport
+spec:
+  selector:
+    app: rabbitmq
+  ports:
+    - port: 5672
+      targetPort: 5672
+      protocol: TCP
+      name: http
+  type: NodePort
 
 

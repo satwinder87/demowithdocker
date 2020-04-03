@@ -3,6 +3,9 @@ package com.example.docker.demo.api;
 import com.example.docker.demo.model.Customer;
 import com.example.docker.demo.rabbitmq.Sender;
 import com.example.docker.demo.repository.CustomerRepository;
+import java.nio.charset.Charset;
+import org.springframework.amqp.core.Message;
+import org.springframework.amqp.core.MessageBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,6 +32,20 @@ public class DemoController {
         sender.send(customer.toString());
         System.out.println("Customer Sent :" + customer.getFirstName());
         return customerRepository.save(customer);
+    }
+
+    @PostMapping(value = "sendMessage")
+    public void sendMessage(){
+        Customer customer = new Customer();
+        customer.setFirstName("test");
+        customer.setLastName("val");
+
+        Message messageWithHeader = MessageBuilder.withBody(customer.toJson().getBytes(Charset.defaultCharset()))
+            .setType("EVENT_ROAM")
+            .build();
+        sender.send(messageWithHeader);
+       // sender.send(customer);
+
     }
 
     @GetMapping(value = "customer/all")
